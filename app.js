@@ -13,7 +13,7 @@
 
   form.addEventListener("submit",function(event){
     event.preventDefault();
-    var textValue = input.value;
+    const textValue = input.value;
 
     if(textValue ===""){
       alert("Type somethimg")
@@ -47,13 +47,20 @@
   }
 
   function handleItem(textValue){
-    const item = list.querySelectorAll(".item");
-    console.log(item);
-    item.forEach(function(item){
+    const items = list.querySelectorAll(".item");
+    console.log(items);
+    items.forEach(function(item){
       if(item.querySelector(".item-name").textContent === textValue){
-        item.querySelector('.complete').addEventListener("click",function(){
-          this.clssList.toggle("completed");
+				//complete addEventListener
+        item
+				.querySelector('.complete')
+				.addEventListener("click",function(){
+          item.querySelector(".item-name").classList.toggle("completed");
+
         });
+
+				//edit addEventListener
+				
       }
     });
   }

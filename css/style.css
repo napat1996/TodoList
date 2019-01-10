@@ -55,3 +55,16 @@ input[type="checkbox"] {
 .fa{
 	color: #fff
 }
+
+
+/* javascript */
+.completed{
+	text-decoration: line-through;
+	opacity: 0.5;
+}
+.visibility{
+	opacity: 0.5;
+}
+.complete:hover{
+	color: var(--mainGreen);
+}
