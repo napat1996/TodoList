@@ -11,7 +11,7 @@
   	<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
   	<link rel="stylesheet" a href="css/style.css">
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-		<script type="text/javascript" src="js/index.js"></script>
+
 </head>
 <body>
 
@@ -28,7 +28,7 @@
 						<div class="input-group">
 							<input type="text" id="input" class="form-control text-capitlize" placeholder="Enter todo list item" value="this is a todo list item">
 							<div class="input-group-append">
-								<button id="btn-add" type="submit" class="btn" onclick="addItem()">add item</button>
+								<button id="btn-add" type="submit" class="btn btnAdd">add item</button>
 							</div>
 							<span>
 
@@ -39,48 +39,50 @@
 				<div class="row">
 					<ul id="list" class="list col-lg-6 col-8 mx-auto">
 
+
 						<!-- <li>
 							<div class="row">
+
 								<div class="col-auto mr-auto">
-									<h6 class="item text-capitalize">this is a todo item</h6>
+									<input type="checkbox" class="mr-3">
+									<label class="item text-capitalize">Go Shopping</label>
 								</div>
 								<div class="icon col-auto ">
-									<button id="btnClr" type="button" class="btn btnHide">Clear</button>
-									<a href="#" class="complete mx-2 icon"><i class="fa fa-check-circle"></i></a>
-									<a href="#" class="complete mx-2 icon"><i class="fa fa-edit"></i></a>
-									<a href="#" class="complete mx-2 icon"><i class="fa fa-times-circle"></i></a>
+
+									<button href="#" class="edit mx-2 icon"><i class="fa fa-edit"></i></button>
+									<button href="#" class="delete mx-2 icon"><i class="fa fa-trash"></i></button>
 								</div>
 							</div>
 						</li>
 						<li>
 							<div class="row">
-								<div class="col-auto mr-auto">this is a todo item
-									<h5 class="item text-capitalize"></h5>
+								<div class="col-auto mr-auto">
+									<input type="checkbox" class="mr-3">
+									<label class="item text-capitalize">Pay Bills</label>
 								</div>
 								<div class="icon col-auto ">
-									<button id="btnClr" type="button" class="btn btnHide">Clear</button>
-									<a href="#" class="complete mx-2 icon"><i class="fa fa-check-circle"></i></a>
-									<a href="#" class="complete mx-2 icon"><i class="fa fa-edit"></i></a>
-									<a href="#" class="complete mx-2 icon"><i class="fa fa-times-circle"></i></a>
+
+									<button href="#" class="edit mx-2 icon"><i class="fa fa-edit"></i></button>
+									<button href="#" class="delete mx-2 icon"><i class="fa fa-trash"></i></button>
 								</div>
 							</div>
+						</li>
+						<li class="editMode">
+							<label>Go Shopping</label>
+							<input type="text" value="Go Shopping">
+							<button class="edit">Edit</button>
+							<button class="delete">Delete</button>
 						</li> -->
 
 					</ul>
 				</div>
 				<div class="row">
-					<button id="btnClr" type="button" class="btn btnHide mx-auto" onclick="clearAll">Clear Item</button>
-
-<button id="myBtn">Try it</button>
-
-<p id="demo"></p>
+					<button id="btnClr" type="button" class="btn btnHide mx-auto" >Clear Item</button>
 
 <script>
-document.getElementById("myBtn").addEventListener("click", displayDate);
 
-function displayDate() {
-  document.getElementById("demo").innerHTML = Date();
-}
+
+
 </script>
 
 
@@ -92,6 +94,6 @@ function displayDate() {
 
 	</div>
 
-
+<script type="text/javascript" src="app.js"></script>
 </body>
 </html>
