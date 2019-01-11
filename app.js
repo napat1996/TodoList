@@ -24,7 +24,8 @@
       //add to array
       itemData.push(textValue);
       // console.log(itemData);
-
+			//locak storage
+			localStorage.setItem("list",JSON. stringify(itemData));
       //add addEventListener to icon
       handleItem(textValue);
     }
@@ -52,15 +53,36 @@
     items.forEach(function(item){
       if(item.querySelector(".item-name").textContent === textValue){
 				//complete addEventListener
-        item
-				.querySelector('.complete')
-				.addEventListener("click",function(){
+        item.querySelector('.complete').addEventListener("click",function(){
           item.querySelector(".item-name").classList.toggle("completed");
 
         });
 
-				//edit addEventListener
-				
+				//delete addEventListener
+				item.querySelector('.delete').addEventListener("click",function(){
+					input.value = textValue;
+					list.removeChild(item);
+					console.log(items);
+
+					itemData = itemData.filter(function(item){
+						return item !==textValue;
+					});
+					localStorage.setItem("list",JSON. stringify(itemData));
+					input.value = "";
+
+				});
       }
     });
   }
+
+//clear All
+	btnClr.addEventListener("click",function(){
+		itemData = [];
+		var items = list.querySelectorAll(".item");
+
+		if(items.length > 0){
+			items.forEach(function(item){
+				list.removeChild(item);
+			});
+		}
+	});
