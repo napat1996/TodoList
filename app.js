@@ -5,6 +5,7 @@
 	var list = document.getElementById("list");
 	var btnClr = document.getElementById("btnClr");
 	var editInput = document.createElement("input"); // text
+
 	var id = 1;
 	// listItem = {item: "todo item", checked: flase}
 	var listItem = "";
@@ -17,12 +18,13 @@
 			list.insertAdjacentHTML('beforeend',`<li class="item">
 			<div class="row">
 				<div class="col-auto mr-auto">
+					<input type="checkbox" id="checkbox" class="mr-3">
 					<span class="item-name text-capitalize">${singleItem}</span>
 				</div>
 				<div class="icon col-auto ">
-					 <a href="#" class="complete mx-2 icon"><i class="fa fa-check-circle"></i></a>
-					<a href="#" class="edit mx-2 icon"><i class="fa fa-edit"></i></a>
-					<a href="#" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
+					 <!--<a href="javascript:;" class="complete mx-2 icon"><i class="fa fa-check-circle"></i></a>-->
+					<a href="javascript:;" class="edit mx-2 icon"><i class="fa fa-edit"></i></a>
+					<a href="javascript:;" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
 				</div>
 			</div>
 			</li>`);
@@ -50,19 +52,20 @@
     }
   });
 
-  function addItem(value,input){
+  function addItem(value){
     var div = document.createElement('li')
     div.classList.add('item');
     div.innerHTML = `<div class="row">
       <div class="col-auto mr-auto">
+				<input type="checkbox" class="mr-3" id="checkbox">
         <span class="item-name text-capitalize">${value}</span>
       </div>
       <div class="icon col-auto ">
-         <a href="#" class="complete mx-2 icon"><i class="fa fa-check-circle"></i></a>
-        <a href="#" class="edit mx-2 icon" data-target="#editBtn" data-toggle="modal" ><i class="fa fa-edit"></i></a>
-        <a href="#" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
-
-				<!-- Modal -->
+         <!-- <a href="javascript;" class="complete mx-2 icon"><i class="fa fa-check-circle"></i></a> -->
+        <a href="javascript;" class="edit mx-2 icon" data-target="#editBtn" data-toggle="modal" ><i class="fa fa-edit"></i></a>
+        <a href="javascript;" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
+<!--
+				<!-- Modal
 				<div class="modal" tabindex="-1" role="dialog" id="editBtn">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
@@ -80,18 +83,28 @@
 				        </form>
 				      </div>
 				      <div class="modal-footer">
-				        <button type="button" class="btn btn-primary">Save changes</button>
+				        <button type="button" class="btn btn-primary" type="submit">Save changes</button>
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				      </div>
 				    </div>
 				  </div>
-				</div>
+				</div>-->
       </div>
     </div>
 		`;
     list.appendChild(div);
   }
 
+list.addEventListener("click", boxChecked);
+	function boxChecked(event) {
+
+			const element = event.target;
+			if(element.type === "checkbox") {
+				element.parentNode.classList.toggle("completed");
+
+				localStorage.setItem("listItem", JSON.stringify(itemData));
+			}
+		}
 
   function handleItem(textValue){
     const items = list.querySelectorAll(".item");
@@ -100,45 +113,29 @@
       if(item.querySelector(".item-name").textContent === textValue){
 
 				//complete addEventListener
-        item.querySelector('.complete').addEventListener("click",function(){
-          item.querySelector(".item-name").classList.toggle("completed");
-					this.classList.toggle("completed")
-					localStorage.setItem("listItem",JSON. stringify(itemData));
-        });
+        // item.querySelector('.complete').addEventListener("click",function(){
+        //   item.querySelector(".item-name").classList.toggle("completed");
+				// 	this.classList.toggle("completed")
+				// 	localStorage.setItem("listItem",JSON.stringify(itemData));
+        // });
 
-				//edit addEventListener
+				//editEventListener
 				item.querySelector(".edit").addEventListener('click',function(){
-					var model = document.createElement("div",'tabindex="-1"','role="dialog"');
-					model.classList.add('model');
-					model.innerHTML = `<div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title">Edit Task</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				      </div>
-				      <div class="modal-body">
-								<form>
-				          <div class="form-group">
-				            <input type="text" class="form-control" id="recipient-name"placeholder="new tesk">
-				          </div>
-				        </form>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-primary">Save changes</button>
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				      </div>
-				    </div>
-				  </div>`;
-					$("#editModal").modal("toggle");
-					// var textValue = prompt("Please enter new task:", "");
-					// if (textValue == null || textValue == "") {
-					// 	txt = "User cancelled the prompt.";
-					// } else {
-					// 	txt = "Hello " + person + "! How are you today?";
-					// }
-					// document.getElementById("demo").innerHTML = txt;
+					var editInput = prompt("Please enter new task:", textValue);
+					if (editInput == null || editInput == "") {
+						txt = "User cancelled the prompt.";
+					} else {
+						console.log(editInput);
+
+						var num = itemData.indexOf(textValue);
+						console.log(num);
+						editInput.value = textValue;
+						textValue = editInput;
+						itemData[num] = textValue;
+  					item.querySelector(".item-name").innerHTML = textValue;
+						console.log(itemData);
+					}
+
 					localStorage.setItem("listItem",JSON. stringify(itemData));
 				});
 
