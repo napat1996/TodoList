@@ -12,23 +12,23 @@
 
 	let itemData = JSON.parse(localStorage.getItem('listItem')) || [];
 
-	// if(itemData.length>0){
-	// 	itemData.forEach(function(singleItem){
-	// 		list.insertAdjacentHTML('beforeend',`<li class="item">
-	// 		<div class="row">
-	// 			<div class="col-auto mr-auto">
-	// 				<span class="item-name text-capitalize">${singleItem}</span>
-	// 			</div>
-	// 			<div class="icon col-auto ">
-	// 				 <a href="#" class="complete mx-2 icon"><i class="fa fa-check-circle"></i></a>
-	// 				<a href="#" class="edit mx-2 icon"><i class="fa fa-edit"></i></a>
-	// 				<a href="#" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
-	// 			</div>
-	// 		</div>
-	// 		</li>`);
-	// 		handleItem(singleItem);
-	// 	});
-	// }
+	if(itemData.length>0){
+		itemData.forEach(function(singleItem){
+			list.insertAdjacentHTML('beforeend',`<li class="item">
+			<div class="row">
+				<div class="col-auto mr-auto">
+					<span class="item-name text-capitalize">${singleItem}</span>
+				</div>
+				<div class="icon col-auto ">
+					 <a href="#" class="complete mx-2 icon"><i class="fa fa-check-circle"></i></a>
+					<a href="#" class="edit mx-2 icon"><i class="fa fa-edit"></i></a>
+					<a href="#" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
+				</div>
+			</div>
+			</li>`);
+			handleItem(singleItem);
+		});
+	}
 
   form.addEventListener("submit",function(event){
     event.preventDefault();
@@ -44,13 +44,13 @@
       itemData.push(textValue);
       // console.log(itemData);
 			//locak storage
-			localStorage.setItem("listItem",JSON.stringify(itemData));
+			localStorage.setItem("listItem",JSON. stringify(itemData));
       //add addEventListener to icon
       handleItem(textValue);
     }
   });
 
-  function addItem(value){
+  function addItem(value,input){
     var div = document.createElement('li')
     div.classList.add('item');
     div.innerHTML = `<div class="row">
@@ -59,49 +59,40 @@
       </div>
       <div class="icon col-auto ">
          <a href="#" class="complete mx-2 icon"><i class="fa fa-check-circle"></i></a>
-        <a href="#" class="edit mx-2 icon"><i class="fa fa-edit"></i></a>
+        <a href="#" class="edit mx-2 icon" data-target="#editBtn" data-toggle="modal" ><i class="fa fa-edit"></i></a>
         <a href="#" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
+
+				<!-- Modal -->
+				<div class="modal" tabindex="-1" role="dialog" id="editBtn">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title">Edit Task</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+								<form>
+				          <div class="form-group">
+				            <input type="text" class="form-control" id="recipient-name"placeholder="new tesk">
+				          </div>
+				        </form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-primary">Save changes</button>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
       </div>
-    </div>`;
+    </div>
+		`;
     list.appendChild(div);
   }
 
-	if(itemData.length>0){
-		itemData.forEach(function(singleItem){
-			if(singleItem.charAt(singleItem.length-1)!=="C"){
 
-				list.insertAdjacentHTML("beforeend",`<li class="item">
-				<div class="row">
-					<div class="col-auto mr-auto">
-						<span class="item-name text-capitalize imCompleted">${singleItem}</span>
-					</div>
-					<div class="icon col-auto ">
-						 <a href="#" class="complete mx-2 icon"><i class="fa fa-check-circle imConpleted"></i></a>
-						<a href="#" class="edit mx-2 icon"><i class="fa fa-edit"></i></a>
-						<a href="#" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
-					</div>
-				</div>
-				</li>`);
-
-			}else{
-				  const items = list.querySelectorAll(".item");
-				singleItem = singleItem.slice(0, -1);
-				list.insertAdjacentHTML("beforeend",`<li class="item">
-				<div class="row">
-					<div class="col-auto mr-auto">
-						<span class="item-name text-capitalize completed">${singleItem}</span>
-					</div>
-					<div class="icon col-auto ">
-						 <a href="#" class="complete mx-2 icon"><i class="fa fa-check-circle visibility"></i></a>
-						<a href="#" class="edit mx-2 icon"><i class="fa fa-edit"></i></a>
-						<a href="#" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
-					</div>
-				</div>
-				</li>`);
-			}
-handleItem(singleItem);
-		});
-	}
   function handleItem(textValue){
     const items = list.querySelectorAll(".item");
     console.log(items);
@@ -110,27 +101,46 @@ handleItem(singleItem);
 
 				//complete addEventListener
         item.querySelector('.complete').addEventListener("click",function(){
-
-					var num = itemData.indexOf(textValue);
-
-					if(textValue.charAt(textValue.length-1)!=="C"){
-						item.querySelector(".item-name").classList.toggle("imCompleted");
-						textValue = textValue+"C";
-						console.log("imCompleted");
-					}else{
-						// console.log(num);
-						// list.removeChild(item);
-						item.querySelector(".item-name").classList.toggle("completed");
-						textValue = textValue.slice(0, -1);
-						console.log("Completed");
-
-						// console.log(textValue);
-					}
-
-					itemData[num] = textValue;
-					console.log(itemData);
-					localStorage.setItem("listItem",JSON.stringify(itemData));
+          item.querySelector(".item-name").classList.toggle("completed");
+					this.classList.toggle("completed")
+					localStorage.setItem("listItem",JSON. stringify(itemData));
         });
+
+				//edit addEventListener
+				item.querySelector(".edit").addEventListener('click',function(){
+					var model = document.createElement("div",'tabindex="-1"','role="dialog"');
+					model.classList.add('model');
+					model.innerHTML = `<div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title">Edit Task</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+								<form>
+				          <div class="form-group">
+				            <input type="text" class="form-control" id="recipient-name"placeholder="new tesk">
+				          </div>
+				        </form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-primary">Save changes</button>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>`;
+					$("#editModal").modal("toggle");
+					// var textValue = prompt("Please enter new task:", "");
+					// if (textValue == null || textValue == "") {
+					// 	txt = "User cancelled the prompt.";
+					// } else {
+					// 	txt = "Hello " + person + "! How are you today?";
+					// }
+					// document.getElementById("demo").innerHTML = txt;
+					localStorage.setItem("listItem",JSON. stringify(itemData));
+				});
 
 				//delete addEventListener
 				item.querySelector('.delete').addEventListener("click",function(){
@@ -140,21 +150,12 @@ handleItem(singleItem);
 					itemData = itemData.filter(function(item){
 						return item !==textValue;
 					});
-					localStorage.setItem("listItem",JSON.stringify(itemData));
+					localStorage.setItem("listItem",JSON. stringify(itemData));
 					input.value = "";
 
 				});
 
-				//edit addEventListener
-				item.querySelector(".edit").addEventListener('click',function(){
-					input.value = textValue;
-					list.removeChild(item);
 
-					itemData = itemData.filter(function(item){
-						return item !==textValue;
-					});
-					localStorage.setItem("listItem",JSON.stringify(itemData));
-				});
       }
     });
   }
@@ -168,7 +169,5 @@ handleItem(singleItem);
 			items.forEach(function(item){
 				list.removeChild(item);
 			});
-			localStorage.setItem("listItem",JSON.stringify(itemData));
-			input.value = "";
 		}
 	});
