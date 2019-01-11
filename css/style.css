@@ -62,9 +62,17 @@ input[type="checkbox"] {
 	text-decoration: line-through;
 	opacity: 0.5;
 }
+.imCompleted{
+	opacity: 1;
+}
 .visibility{
+	text-decoration: blink;
 	opacity: 0.5;
 }
 .complete:hover{
 	color: var(--mainGreen);
+}
+
+.editMode input[type=text] {
+  display:block;
 }
