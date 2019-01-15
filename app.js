@@ -62,8 +62,8 @@
       </div>
       <div class="icon col-auto ">
          <!-- <a href="javascript;" class="complete mx-2 icon"><i class="fa fa-check-circle"></i></a> -->
-        <a href="javascript;" class="edit mx-2 icon" data-target="#editBtn" data-toggle="modal" ><i class="fa fa-edit"></i></a>
-        <a href="javascript;" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
+        <a href="#" class="edit mx-2 icon" data-target="#editBtn" data-toggle="modal" ><i class="fa fa-edit"></i></a>
+        <a href="#" class="delete mx-2 icon"><i class="fa fa-trash"></i></a>
 <!--
 				<!-- Modal
 				<div class="modal" tabindex="-1" role="dialog" id="editBtn">
@@ -165,6 +165,11 @@ list.addEventListener("click", boxChecked);
 		if(items.length > 0){
 			items.forEach(function(item){
 				list.removeChild(item);
+				itemData = itemData.filter(function(item){
+					return item !==textValue;
+				});
+				localStorage.setItem("listItem",JSON. stringify(itemData));
+				input.value = "";
 			});
 		}
 	});
